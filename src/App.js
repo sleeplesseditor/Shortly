@@ -6,7 +6,7 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="main">
         <div>
           <h2>All Links</h2>
           <LinkList />

@@ -1,4 +1,11 @@
 types: ./types.graphql
 
+functions:
+  createShortLink:
+    type: subscription
+    query: src/createShortLink.graphql
+    handler:
+      code: src/createShortLink.js
+
 permissions:
   - operation: "*"
