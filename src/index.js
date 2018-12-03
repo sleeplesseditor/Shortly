@@ -9,22 +9,50 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
+import { split } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+
 const serviceId = require('./config/keys').serviceID;
 const GRAPHQL_ENDPOINT = `https://api.graph.cool/simple/v1/${serviceId}`;
+const SUBSCRIPTIONS_ENDPOINT = `wss://subscriptions.graph.cool/v1/${serviceId}`;
+
+if (!SUBSCRIPTIONS_ENDPOINT) {
+    throw Error('Provide a GraphQL Subscriptions endpoint');
+}
 
 if (!GRAPHQL_ENDPOINT) {
     throw Error('Provide a GraphQL endpoint');
 }
 
+const httpLink = new HttpLink({
+    uri: GRAPHQL_ENDPOINT
+});
+
+const wsLink = new WebSocketLink({
+    uri: SUBSCRIPTIONS_ENDPOINT,
+    options: {
+        reconnect: true
+    }
+});
+
+const link = split(
+    ({ query }) => {
+        const { kind, operation } = getMainDefinition(query);
+        return kind === 'OperationDefinition' && operation === 'subscription';
+    },
+    wsLink,
+    httpLink
+);
+
 const client = new ApolloClient({
-    link: new HttpLink({
-        uri: GRAPHQL_ENDPOINT,
-    }),
+    link,
     cache: new InMemoryCache(),
 });
+
 const withApolloProvider = Comp => (
     <ApolloProvider client={client}>{Comp}</ApolloProvider>
-  );
+);
 
 ReactDOM.render(
     withApolloProvider(<App />), 
