@@ -37,26 +37,34 @@ class CreateShortLink extends Component {
 
     render() {
         return (
-            <div>
-                <input 
-                    id="url"
-                    type="text"
-                    value={this.state.url}
-                    placeholder="Link URL"
-                    onChange={e => 
-                        this.setState({ url: e.target.value })
-                    }
-                />
-                <input 
-                    id="description"
-                    type="text"
-                    value={this.state.description}
-                    placeholder="Link Description"
-                    onChange={e => 
-                        this.setState({ description: e.target.value })
-                    }
-                />
-                <button onClick={() => this.createShortLink()}>
+            <div className="entry">
+                <div className="row">
+                    <div className="input-field col s6">
+                        <input 
+                            id="url"
+                            type="text"
+                            value={this.state.url}
+                            placeholder="Link URL"
+                            onChange={e => 
+                                this.setState({ url: e.target.value })
+                            }
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-field col s6">
+                        <input 
+                            id="description"
+                            type="text"
+                            value={this.state.description}
+                            placeholder="Link Description"
+                            onChange={e => 
+                                this.setState({ description: e.target.value })
+                            }
+                        />
+                    </div>
+                </div>
+                <button className="create" onClick={() => this.createShortLink()}>
                     Create
                 </button>
             </div>

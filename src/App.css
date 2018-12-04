@@ -5,9 +5,36 @@
 .main {
   padding: 20px;
   text-align: center;
+  
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+#url {
+  width: 500px;
 }
 
 #description {
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 500px;
+}
+
+.create {
+  width: 200px;
+  padding: 10px;
+  border-radius: 50px;
+  background-color: rgb(236, 58, 58);
+  color: #fff;
+  font-weight: 600;
+  align-self: center;
+  transition: all .4s;
+}
+
+.create:hover {
+  background-color: rgb(180, 6, 6);
+  font-weight: 900; 
+  transform: scale(1.1); 
 }

@@ -8,11 +8,12 @@ class Home extends Component {
     return (
       <div className="main">
         <div>
-          <h2>All Links</h2>
+          <h3>All Links</h3>
           <LinkList />
         </div>
+        <br />
         <div>
-          <h2>Create a Short Link</h2>
+          <h3>Create a Short Link</h3>
           <CreateShortLink />
         </div>
       </div>
