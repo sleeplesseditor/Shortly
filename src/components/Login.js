@@ -4,10 +4,14 @@ import { graphql } from 'react-apollo';
 import constants from '../constants';
 
 const AUTHENTICATE_USER_MUTATION = gql`
-  mutation AuthUser($email: String!, $password: String!) {
-    authenticateUser(email: $email, password: $password) {
-      id
-      token
+  mutation AuthUser(
+        $email: String!, 
+        $password: String!
+    ) {
+        authenticateUser(email: $email, password: $password
+    ) {
+        id
+        token
     }
   }`;
 

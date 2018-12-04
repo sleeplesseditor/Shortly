@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql, withApollo } from 'react-apollo';
+import constants from '../constants';
 
 const CREATE_SHORT_LINK_MUTATION = gql`
     mutation CreateLinkMutation(
         $url: String!, 
-        $description: String! 
+        $description: String!
+        $createdById: ID!
     ) {
         createLink(
             url: $url, 
-            description: $description 
+            description: $description
+            createdById: $createdById 
         ) {
             id
         }
@@ -31,6 +34,7 @@ class CreateShortLink extends Component {
             variables: {
                 url,
                 description,
+                createdById: localStorage.getItem(constants.shortlyID),
             },
         });
     };

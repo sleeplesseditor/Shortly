@@ -52,15 +52,21 @@ const ShortLinkRedirect = ({
     data: { loading, error, allLinks } 
 }) => {
     if (error) {
-        return <div>Error Occurred</div>;
+        return <div className="main">
+            <p className="message-text">Error Occurred</p>
+        </div>;
     }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="main">
+            <p className="message-text">Loading...</p>
+        </div>;
     }
 
     if(!allLinks || allLinks.length !==1) {
-        return <div>No Redirect Found for '{hash}'</div>;
+        return <div className="main">
+            <p className="message-text">No Redirect Found for '{hash}'</p>
+        </div>;
     }
 
     const linkInfo = allLinks[0];

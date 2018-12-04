@@ -14,6 +14,8 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloLink } from 'apollo-link';
 
+import constants from './constants';
+
 const serviceId = require('./config/keys').serviceID;
 const GRAPHQL_ENDPOINT = `https://api.graph.cool/simple/v1/${serviceId}`;
 const SUBSCRIPTIONS_ENDPOINT = `wss://subscriptions.graph.cool/v1/${serviceId}`;
@@ -30,6 +32,19 @@ const httpLink = new HttpLink({
     uri: GRAPHQL_ENDPOINT
 });
 
+const apolloLinkWithToken = new ApolloLink((operation, forward) => {
+    const token = localStorage.getItem(constants.shortlyToken);
+    const authHeader = token ? `Bearer ${token}` : null;
+    operation.setContext({
+        headers: {
+            authorization: authHeader,
+        },
+    });
+    return forward(operation);
+});
+
+const httpLinkWithToken = apolloLinkWithToken.concat(httpLink);
+
 const wsLink = new WebSocketLink({
     uri: SUBSCRIPTIONS_ENDPOINT,
     options: {
@@ -43,7 +58,7 @@ const link = split(
         return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,
-    httpLink
+    httpLinkWithToken,
 );
 
 const client = new ApolloClient({
