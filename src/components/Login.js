@@ -15,7 +15,7 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="main">
                 <h2>Login to Shortly</h2>
                 <input
                     id="email"
@@ -37,7 +37,10 @@ class Login extends Component {
                     }
                 />
                 <br />
-                <button onClick={() => this.login()}>Log In</button>
+                <button
+                    className="main_button" 
+                    onClick={() => this.login()}
+                >Log In</button>
             </div>
         );
     }

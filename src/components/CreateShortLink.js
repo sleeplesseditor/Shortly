@@ -64,7 +64,7 @@ class CreateShortLink extends Component {
                         />
                     </div>
                 </div>
-                <button className="create" onClick={() => this.createShortLink()}>
+                <button className="main_button" onClick={() => this.createShortLink()}>
                     Create
                 </button>
             </div>

@@ -1,21 +1,55 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import constants from '../constants';
+
+const SIGNUP_USER_MUTATION = gql`
+    mutation SignupUser(
+        $email: String!, 
+        $password: String!
+    ){
+        signupUser(email: $email, password: $password) {
+            id
+            token
+        }
+    }
+`;
 
 class Signup extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
+        state = {
             email: '',
             password: '',
-        };
-    }
+            error: ''
+        }
+    
 
     signup = async () => {
+        this.setState({
+            error: ''
+        });
 
-    };
+        const { email, password } = this.state;
+        try {
+            const result = await this.props.signupUserMutation({
+                variables: {
+                    email,
+                    password
+                },
+            });
+
+            localStorage.setItem(constants.shortlyID, result.data.signupUser.id);
+            localStorage.setItem(constants.shortlyToken, result.data.signupUser.token);
+            this.props.history.push('/');
+        } catch (error) {
+            this.setState({
+                error: `Sorry, an error occurred on signing up. (${error})`
+            })
+        }
+    }
 
     render() {
         return (
-            <div>
+            <div className="main">
                 <h2>Join Shortly</h2>
                 <input
                     id="email"
@@ -37,10 +71,15 @@ class Signup extends Component {
                     }
                 />
                 <br />
-                <button onClick={() => this.login()}>Sign Up</button>
+                <button 
+                    onClick={() => this.login()}
+                    className="main_button"
+                >
+                    Sign Up
+                </button>
             </div>
         );
     }
-}
+};
 
 export default Signup;
