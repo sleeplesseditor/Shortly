@@ -70,7 +70,7 @@ class LinkList extends Component {
 
         const allLinks = this.props.allLinksQuery.allLinks;
         if (allLinks.length === 0) {
-            return <div>No links...</div>;
+            return <div>No Links...</div>;
         }
 
         return (

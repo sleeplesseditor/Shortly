@@ -12,6 +12,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+import { ApolloLink } from 'apollo-link';
 
 const serviceId = require('./config/keys').serviceID;
 const GRAPHQL_ENDPOINT = `https://api.graph.cool/simple/v1/${serviceId}`;
