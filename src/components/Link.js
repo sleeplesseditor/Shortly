@@ -6,7 +6,7 @@ class Link extends Component {
     render(){
         const clickCount = (this.props.link.stats && this.props.link.stats.clicks) || 0;
         return (
-            <div>
+            <div className="table_container">
                 {/* <div>
                     {this.props.link.description} (<a 
                         href={this.props.link.hash}
@@ -15,7 +15,7 @@ class Link extends Component {
                     </a>) --> clicks: {clickCount}
                 </div> */}
 
-                <Table hoverable>
+                <Table hoverable className="link_table">
                     <thead>
                         <tr>
                         <th>Website Name</th>

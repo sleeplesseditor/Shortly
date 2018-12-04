@@ -38,3 +38,14 @@
   font-weight: 900; 
   transform: scale(1.1); 
 }
+
+.table_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.link_table {
+  width: 50%;
+  align-self: center;
+}
