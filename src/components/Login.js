@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import constants from '../constants';
+
+const AUTHENTICATE_USER_MUTATION = gql`
+  mutation AuthUser($email: String!, $password: String!) {
+    authenticateUser(email: $email, password: $password) {
+      id
+      token
+    }
+  }`;
 
 class Login extends Component {
     constructor(props){
@@ -10,7 +21,26 @@ class Login extends Component {
     }
 
     login = async () => {
+        const { email, password } = this.state;
+        try {
+            const result = await this.props.authenticateUserMutation({
+                variables: {
+                    email,
+                    password
+                },
+            });
 
+            localStorage.setItem(constants.shortlyID, result.data.authenticateUser.id);
+            localStorage.setItem(
+                constants.shortlyToken, 
+                result.data.authenticateUser.token,
+            );
+            this.props.history.push('/');
+        } catch (error) {
+            this.setState({
+                error: `Sorry, an error occurred on signing up. (${error})`
+            })
+        }
     };
 
     render() {
@@ -46,4 +76,6 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default graphql(AUTHENTICATE_USER_MUTATION, {
+    name: 'authenticateUserMutation',
+})(Login);

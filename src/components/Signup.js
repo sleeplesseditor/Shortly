@@ -72,7 +72,7 @@ class Signup extends Component {
                 />
                 <br />
                 <button 
-                    onClick={() => this.login()}
+                    onClick={() => this.signup()}
                     className="main_button"
                 >
                     Sign Up
@@ -82,4 +82,6 @@ class Signup extends Component {
     }
 };
 
-export default Signup;
+export default graphql(SIGNUP_USER_MUTATION, { name: 'signupUserMutation' })(
+    Signup
+);
